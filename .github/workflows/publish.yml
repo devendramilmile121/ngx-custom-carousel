@@ -22,32 +22,6 @@ jobs:
 
       - name: Build Angular Project
         run: ng build ngx-custom-carousel
-
-
-  debug:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: List Files in dist
-        run: ls
-      - name: List Files in dist
-        run: ls -R dist
-
-      - name: Print Current Directory
-        run: pwd
-
-  publish:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 21
-
       - name: Publish to GitHub Packages
         run: |
           cd dist/ngx-custom-carousel
