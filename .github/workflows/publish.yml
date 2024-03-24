@@ -23,9 +23,10 @@ jobs:
       - name: Build Angular Project
         run: ng build ngx-custom-carousel
       - name: Publish to GitHub Packages
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           cd dist/ngx-custom-carousel
-          npm config set //npm.pkg.github.com/:_authToken ${{ secrets.NPM_TOKEN }}
-          npm publish --access public
-          env:
-            NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          npm publish --access public --registry=https://registry.npmjs.org/
+
+
