@@ -10,6 +10,9 @@ Install `ngx-custom-carousel` via npm:
 npm install ngx-custom-carousel --save
 ```
 
+## Demo
+[![portfolio](https://camo.githubusercontent.com/d0564aee63e39899cbe989b7cb3316dce83277e87ca6f5f68f09aa7fdabbe214/68747470733a2f2f692e696d6775722e636f6d2f767232614267412e706e67)](https://stackblitz.com/edit/stackblitz-starters-jr9c9d?file=src%2Fmain.ts)
+
 ## Usage
 
 1. Import the `NgxCustomCarouselModule` in your Angular module:
