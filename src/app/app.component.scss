@@ -1,8 +1,8 @@
 .container {
-    margin: 16px 32px;
     height: 96.6%;
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .hw-full {
@@ -35,4 +35,5 @@
 ngx-custom-carousel {
     display: block;
     height: 85%;
+    width: 100%;
 }

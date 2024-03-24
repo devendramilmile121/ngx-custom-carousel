@@ -22,7 +22,7 @@ export class NgxCustomCarouselComponent implements OnInit, OnDestroy {
     carouselItemTemplate!: TemplateRef<any>;
 
     currentIndex = 0;
-    private intervalSubscription!: Subscription;
+    intervalSubscription!: Subscription;
 
     ngOnInit() {
         this.startInterval();
@@ -52,9 +52,11 @@ export class NgxCustomCarouselComponent implements OnInit, OnDestroy {
     }
 
     jumpTo(index: number) {
-        this.currentIndex = index;
-        this.stopInterval();
-        this.startInterval();
+        if (this.currentIndex !== index) {
+            this.currentIndex = index;
+            this.stopInterval();
+            this.startInterval();
+        }
     }
 
     ngOnDestroy() {
