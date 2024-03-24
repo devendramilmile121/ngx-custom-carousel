@@ -1,8 +1,9 @@
 name: Angular Package
 
 on:
-  release:
-    types: [created]
+  push:
+    branches:
+     - master
 
 jobs:
   build:
@@ -15,13 +16,13 @@ jobs:
 
       - name: Install Angular CLI
         run: npm install -g @angular/cli
-      
-      - name: Install dependencies  
+
+      - name: Install dependencies
         run: npm ci
 
       - name: Build Angular Project
         run: ng build ngx-custom-carousel
-        
+
 
   debug:
     needs: build
