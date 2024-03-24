@@ -1,0 +1,38 @@
+.container {
+    margin: 16px 32px;
+    height: 96.6%;
+    display: flex;
+    flex-direction: column;
+}
+
+.hw-full {
+    height: 100%;
+    width: 100%;
+}
+
+.user-details {
+    box-shadow: #38373a26 0px 2px 8px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    margin: 0rem 1rem;
+    &-row {
+        display: flex;
+        gap: 1rem;
+    }
+    &-label {
+        font-weight: 600;
+    }
+    &-value {
+        font-weight: 400;
+    }
+}
+
+ngx-custom-carousel {
+    display: block;
+    height: 85%;
+}

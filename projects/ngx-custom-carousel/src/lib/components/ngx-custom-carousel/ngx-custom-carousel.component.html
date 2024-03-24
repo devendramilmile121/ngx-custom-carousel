@@ -1,0 +1,34 @@
+<div class="carousel" ngxSwipe (swipeLeft)="next()" (swipeRight)="previous()">
+    <div
+        class="carousel-items"
+        [style.transform]="'translateX(' + -100 * currentIndex + '%)'"
+    >
+        <div
+            class="carousel-item"
+            *ngFor="let item of items; let i = index"
+            (mouseenter)="stopInterval()"
+            (mouseleave)="startInterval()"
+        >
+            <ng-container
+                *ngTemplateOutlet="
+                    customItemTemplate || carouselItemTemplate;
+                    context: { $implicit: item, index: i }
+                "
+            ></ng-container>
+        </div>
+    </div>
+    <div class="carousel-dots">
+        <span
+            *ngFor="let item of items; let i = index"
+            class="dot"
+            [class.active]="i === currentIndex"
+            (click)="jumpTo(i)"
+        ></span>
+    </div>
+</div>
+
+<ng-template #carouselItemTemplate let-item let-index="index">
+    <div class="carousel-item">
+        <div>{{ item }}</div>
+    </div>
+</ng-template>
