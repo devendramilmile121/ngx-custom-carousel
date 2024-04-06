@@ -36,3 +36,13 @@
 .dot.active {
     background-color: #333;
 }
+
+.flex {
+    display: flex;
+    flex-direction: row;
+}
+
+.content {
+    height: 100%;
+    width: 100%;
+}

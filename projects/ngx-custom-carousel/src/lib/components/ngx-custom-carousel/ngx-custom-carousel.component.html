@@ -1,20 +1,30 @@
 <div class="carousel" ngxSwipe (swipeLeft)="next()" (swipeRight)="previous()">
-    <div
-        class="carousel-items"
-        [style.transform]="'translateX(' + -100 * currentIndex + '%)'"
-    >
+    <div class="flex content">
+        <div *ngIf="isControleEnabled" class="flex button-previous">
+            button pre
+        </div>
         <div
-            class="carousel-item"
-            *ngFor="let item of items; let i = index"
-            (mouseenter)="stopInterval()"
-            (mouseleave)="startInterval()"
+            class="carousel-items"
+            [style.transform]="'translateX(' + -100 * currentIndex + '%)'"
         >
-            <ng-container
-                *ngTemplateOutlet="
-                    customItemTemplate || carouselItemTemplate;
-                    context: { $implicit: item, index: i }
-                "
-            ></ng-container>
+            <div
+                class="carousel-item"
+                *ngFor="let item of items; let i = index"
+                (mouseenter)="stopInterval()"
+                (mouseleave)="startInterval()"
+            >
+                <div class="flex content">
+                    <ng-container
+                        *ngTemplateOutlet="
+                            customItemTemplate || carouselItemTemplate;
+                            context: { $implicit: item, index: i }
+                        "
+                    ></ng-container>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="isControleEnabled" class="flex button-next">
+            button next
         </div>
     </div>
     <div class="carousel-dots">
