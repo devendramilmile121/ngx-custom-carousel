@@ -1,6 +1,6 @@
 # ngx-custom-carousel
 
-Angular library for a customizable carousel component with support for custom templates and swipe gestures.
+ngx-custom-carousel is a feature-rich Angular 17 component crafted to elevate your carousel experience. Seamlessly integrated with Angular, this library offers swipe functionality for smooth content navigation on various devices. The carousel comes equipped with next and forward buttons, enhancing user interaction. While these buttons maintain a sleek design for consistency, ngx-custom-carousel empowers users to fully customize carousel templates to suit their unique needs. Whether showcasing images, products, or other content, ngx-custom-carousel delivers a dynamic and intuitive solution for creating captivating carousels in Angular applications.
 
 ## Installation
 
@@ -37,7 +37,7 @@ npm install ngx-custom-carousel --save
         </div>
         <div class="hw-full">
             <h3>With Custom Template</h3>
-            <ngx-custom-carousel [items]="itemsTemplate" [customItemTemplate]="userDetailsTemplate" [delay]="5000"></ngx-custom-carousel>
+            <ngx-custom-carousel [items]="itemsTemplate" [customItemTemplate]="userDetailsTemplate" [delay]="5000" [enableControls]="true"></ngx-custom-carousel>
         </div>
     </div>
     ```
@@ -54,3 +54,4 @@ npm install ngx-custom-carousel --save
 
 -   Support for custom template using `<ng-template>` tag.
 -   Swipe left and swipe right gestures for navigation.
+-   Previous Next buttons

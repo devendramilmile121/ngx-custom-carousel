@@ -58,18 +58,19 @@
         padding: 0px;
         margin: 0px;
         cursor: pointer;
-        z-index: 6;
     }
 
     &-button-previous {
         position: absolute;
         top: 50%;
         left: 0%;
+        z-index: 6;
     }
 
     &-button-next {
         position: absolute;
         top: 50%;
         right: 0%;
+        z-index: 6;
     }
 }
