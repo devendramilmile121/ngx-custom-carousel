@@ -64,6 +64,22 @@ describe('NgxCustomCarouselComponent', () => {
         }));
     });
 
+    describe('next', () => {
+        it('should increment currentIndex by 1', () => {
+            component.currentIndex = 1;
+            component.next();
+            expect(component.currentIndex).toBe(2);
+        });
+    });
+
+    describe('previous', () => {
+        it('should decrement currentIndex by 1', () => {
+            component.currentIndex = 2;
+            component.previous();
+            expect(component.currentIndex).toBe(1);
+        });
+    });
+
     describe('ngOnDestroy', () => {
         it('should unsubscribe from intervalSubscription', () => {
             spyOn(component.intervalSubscription, 'unsubscribe');

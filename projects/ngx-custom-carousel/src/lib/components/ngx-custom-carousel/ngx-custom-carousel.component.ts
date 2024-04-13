@@ -1,8 +1,10 @@
 import {
     Component,
     Input,
+    OnChanges,
     OnDestroy,
     OnInit,
+    SimpleChanges,
     TemplateRef,
     ViewChild,
 } from '@angular/core';
@@ -13,45 +15,52 @@ import { Subscription, interval } from 'rxjs';
     templateUrl: './ngx-custom-carousel.component.html',
     styleUrls: ['./ngx-custom-carousel.component.scss'],
 })
-export class NgxCustomCarouselComponent implements OnInit, OnDestroy {
+export class NgxCustomCarouselComponent implements OnChanges, OnInit, OnDestroy {
+
     @Input() items: any[] = [];
     @Input() customItemTemplate!: TemplateRef<any>;
     @Input() delay: number = 2000;
+    @Input() enableControls: boolean = false;
 
     @ViewChild('carouselItemTemplate', { static: true })
     carouselItemTemplate!: TemplateRef<any>;
 
     currentIndex = 0;
     intervalSubscription!: Subscription;
+    isControleEnabled: boolean = false;
 
-    ngOnInit() {
+    ngOnChanges(changes: SimpleChanges): void {
+        this.isControleEnabled = changes?.['enableControls'].currentValue
+    }
+
+    ngOnInit(): void {
         this.startInterval();
     }
 
-    startInterval() {
+    startInterval(): void {
         this.intervalSubscription = interval(this.delay).subscribe(() => {
             this.next();
         });
     }
 
-    stopInterval() {
+    stopInterval(): void {
         if (this.intervalSubscription) {
             this.intervalSubscription.unsubscribe();
         }
     }
 
-    next() {
+    next(): void {
         this.currentIndex = (this.currentIndex + 1) % this.items.length;
     }
 
-    previous() {
+    previous(): void {
         this.currentIndex =
             this.currentIndex === 0
                 ? this.items.length - 1
                 : this.currentIndex - 1;
     }
 
-    jumpTo(index: number) {
+    jumpTo(index: number): void {
         if (this.currentIndex !== index) {
             this.currentIndex = index;
             this.stopInterval();
@@ -59,7 +68,7 @@ export class NgxCustomCarouselComponent implements OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.stopInterval();
     }
 }
