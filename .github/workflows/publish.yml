@@ -29,6 +29,7 @@ jobs:
       - name: Publish the library
         uses: JS-DevTools/npm-publish@v3.1.1
         with:
+          access: public
           token: ${{ secrets.NPM_TOKEN }}
 
 
