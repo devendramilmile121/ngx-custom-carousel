@@ -24,10 +24,10 @@ jobs:
         run: ng build ngx-custom-carousel
 
       - name: Publish the library
-        uses: JS-DevTools/npm-publish@v3.1.1
-        with:
-          folder: dist/ngx-custom-carousel
-          token: ${{ secrets.NPM_TOKEN }}
+        working-directory: dist/ngx-custom-carousel
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKE: ${{ secrets.NPM_TOKEN }}
 
 
 
