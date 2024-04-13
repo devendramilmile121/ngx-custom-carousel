@@ -26,8 +26,7 @@ jobs:
       - name: Publish the library
         uses: JS-DevTools/npm-publish@v3.1.1
         with:
-          package: package.json
-          access: public
+          folder: dist/ngx-custom-carousel
           token: ${{ secrets.NPM_TOKEN }}
 
 
