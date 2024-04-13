@@ -1,8 +1,22 @@
 <div class="carousel" ngxSwipe (swipeLeft)="next()" (swipeRight)="previous()">
+    <div
+        *ngIf="isControleEnabled"
+        class="button-container button-container-button-previous"
+    >
+        <button (click)="previous()">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="36"
+                viewBox="0 -960 960 960"
+                width="36  "
+            >
+                <path
+                    d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z"
+                />
+            </svg>
+        </button>
+    </div>
     <div class="flex content">
-        <div *ngIf="isControleEnabled" class="flex button-previous">
-            button pre
-        </div>
         <div
             class="carousel-items"
             [style.transform]="'translateX(' + -100 * currentIndex + '%)'"
@@ -23,9 +37,23 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="isControleEnabled" class="flex button-next">
-            button next
-        </div>
+    </div>
+    <div
+        *ngIf="isControleEnabled"
+        class="button-container button-container-button-next"
+    >
+        <button (click)="next()">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="36"
+                viewBox="0 -960 960 960"
+                width="36"
+            >
+                <path
+                    d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"
+                />
+            </svg>
+        </button>
     </div>
     <div class="carousel-dots">
         <span

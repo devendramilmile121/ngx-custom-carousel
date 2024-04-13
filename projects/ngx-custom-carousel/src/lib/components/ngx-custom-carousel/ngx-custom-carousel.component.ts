@@ -33,34 +33,34 @@ export class NgxCustomCarouselComponent implements OnChanges, OnInit, OnDestroy 
         this.isControleEnabled = changes?.['enableControls'].currentValue
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.startInterval();
     }
 
-    startInterval() {
+    startInterval(): void {
         this.intervalSubscription = interval(this.delay).subscribe(() => {
             this.next();
         });
     }
 
-    stopInterval() {
+    stopInterval(): void {
         if (this.intervalSubscription) {
             this.intervalSubscription.unsubscribe();
         }
     }
 
-    next() {
+    next(): void {
         this.currentIndex = (this.currentIndex + 1) % this.items.length;
     }
 
-    previous() {
+    previous(): void {
         this.currentIndex =
             this.currentIndex === 0
                 ? this.items.length - 1
                 : this.currentIndex - 1;
     }
 
-    jumpTo(index: number) {
+    jumpTo(index: number): void {
         if (this.currentIndex !== index) {
             this.currentIndex = index;
             this.stopInterval();
@@ -68,7 +68,7 @@ export class NgxCustomCarouselComponent implements OnChanges, OnInit, OnDestroy 
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.stopInterval();
     }
 }

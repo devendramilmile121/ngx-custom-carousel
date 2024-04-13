@@ -1,6 +1,11 @@
 {
   "name": "ngx-custom-carousel",
   "version": "1.1.1",
+  "author": {
+    "email": "milmiledh@gmail.com",
+    "name": "Devendra Milmile"
+  },
+  "license": "MIT",
   "scripts": {
     "build": "ng-packagr -p ng-package.json"
   },
