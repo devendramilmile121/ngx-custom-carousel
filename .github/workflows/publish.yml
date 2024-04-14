@@ -46,7 +46,7 @@ jobs:
       - name: Publish the library
         run: npm run semantic-release
         env:
-          NPM_TOKEN: ${{ secrets.NPM_PUBLISH_AUTOMATION }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   publish_showcase:
     runs-on: ubuntu-latest
