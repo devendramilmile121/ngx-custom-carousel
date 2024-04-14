@@ -1,9 +1,5 @@
 <div class="container">
     <div class="hw-full">
-        <h3>String Items</h3>
-        <ngx-custom-carousel [items]="items"></ngx-custom-carousel>
-    </div>
-    <div class="hw-full">
         <h3>With Custom Template</h3>
         <ngx-custom-carousel
             [items]="itemsTemplate"
@@ -15,24 +11,11 @@
 </div>
 
 <ng-template #userDetailsTemplate let-item let-index="index">
-    <div class="user-details">
-        <div class="user-details-row">
-            <div class="user-details-label">Name:</div>
-            <div class="user-details-value">
-                {{ item.name }}
-            </div>
-        </div>
-        <div class="user-details-row">
-            <div class="user-details-label">Age:</div>
-            <div class="user-details-value">{{ item.age }} years</div>
-        </div>
-        <div class="user-details-row">
-            <div class="user-details-label">Address:</div>
-            <div class="user-details-value">
-                {{ item.address.street }}, {{ item.address.city }},
-                {{ item.address.state }}, {{ item.address.country }},
-                {{ item.address.postalCode }}
-            </div>
-        </div>
+    <div class="card">
+        <img [src]="item.image" [alt]="item.firstName" />
+        <h1>{{ item.firstName + " " + item.lastName }}</h1>
+        <p class="title">{{ item.company.title }}</p>
+        <p>{{ item.company.department }}</p>
+        <p><button>Contact</button></p>
     </div>
 </ng-template>

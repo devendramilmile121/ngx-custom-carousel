@@ -1,35 +1,35 @@
 {
-  "name": "ngx-custom-carousel",
-  "version": "1.2.2",
-  "author": {
-    "email": "milmiledh@gmail.com",
-    "name": "Devendra Milmile"
-  },
-  "description": "ngx-custom-carousel is a feature-rich Angular 17 component crafted to elevate your carousel experience. Seamlessly integrated with Angular, this library offers swipe functionality for smooth content navigation on various devices. The carousel comes equipped with next and forward buttons, enhancing user interaction. While these buttons maintain a sleek design for consistency, ngx-custom-carousel empowers users to fully customize carousel templates to suit their unique needs. Whether showcasing images, products, or other content, ngx-custom-carousel delivers a dynamic and intuitive solution for creating captivating carousels in Angular applications.",
-  "license": "MIT",
-  "scripts": {
-    "build": "ng-packagr -p ng-package.json"
-  },
-  "peerDependencies": {
-    "@angular/common": "^17.3.0",
-    "@angular/core": "^17.3.0"
-  },
-  "dependencies": {
-    "tslib": "^2.3.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/devendramilmile121/ngx-custom-carousel"
-  },
-  "keywords": [
-    "angular",
-   "carousel",
-   "template",
-   "Custom Templates",
-   "Angular Swipe Carousel",
-    "Customizable",
-    "ngx-custom-carousel",
-    "Angular 17"
-],
-  "sideEffects": false
+    "name": "ngx-custom-carousel",
+    "version": "0.0.0-semantically-released",
+    "author": {
+        "email": "milmiledh@gmail.com",
+        "name": "Devendra Milmile"
+    },
+    "description": "ngx-custom-carousel is a feature-rich Angular 17 component crafted to elevate your carousel experience. Seamlessly integrated with Angular, this library offers swipe functionality for smooth content navigation on various devices. The carousel comes equipped with next and forward buttons, enhancing user interaction. While these buttons maintain a sleek design for consistency, ngx-custom-carousel empowers users to fully customize carousel templates to suit their unique needs. Whether showcasing images, products, or other content, ngx-custom-carousel delivers a dynamic and intuitive solution for creating captivating carousels in Angular applications.",
+    "license": "MIT",
+    "scripts": {
+        "build": "ng-packagr -p ng-package.json"
+    },
+    "peerDependencies": {
+        "@angular/common": "^17.3.0",
+        "@angular/core": "^17.3.0"
+    },
+    "dependencies": {
+        "tslib": "^2.3.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/devendramilmile121/ngx-custom-carousel"
+    },
+    "keywords": [
+        "angular",
+        "carousel",
+        "template",
+        "Custom Templates",
+        "Angular Swipe Carousel",
+        "Customizable",
+        "ngx-custom-carousel",
+        "Angular 17"
+    ],
+    "sideEffects": false
 }

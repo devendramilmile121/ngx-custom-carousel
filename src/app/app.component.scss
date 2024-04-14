@@ -10,27 +10,50 @@
     width: 100%;
 }
 
-.user-details {
-    box-shadow: #38373a26 0px 2px 8px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    font-size: 1rem;
-    border-radius: 0.5rem;
-    align-items: center;
-    justify-content: center;
-    margin: 0rem 1rem;
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    min-width: 300px;
+    margin: auto;
+    text-align: center;
+
+    img {
+        width: 128px;
+        height: 128px;
+        border-radius: 50%;
+        border: 1px solid gray;
+        padding: 8px;
+        margin-top: 8px;
+    }
+}
+
+.title {
+    color: grey;
+    font-size: 18px;
+}
+
+button {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
     width: 100%;
-    &-row {
-        display: flex;
-        gap: 1rem;
-    }
-    &-label {
-        font-weight: 600;
-    }
-    &-value {
-        font-weight: 400;
-    }
+    font-size: 18px;
+}
+
+a {
+    text-decoration: none;
+    font-size: 22px;
+    color: black;
+}
+
+button:hover,
+a:hover {
+    opacity: 0.7;
 }
 
 ngx-custom-carousel {

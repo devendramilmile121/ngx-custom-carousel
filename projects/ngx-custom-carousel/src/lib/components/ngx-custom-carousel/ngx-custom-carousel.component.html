@@ -1,57 +1,50 @@
+<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
+<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <div class="carousel" ngxSwipe (swipeLeft)="next()" (swipeRight)="previous()">
     <div
         *ngIf="isControleEnabled"
-        class="button-container button-container-button-previous"
-    >
-        <button (click)="previous()">
+        class="button-container button-container-button-previous">
+        <button (click)="previous()" *ngIf="currentIndex !== 0">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="36"
                 viewBox="0 -960 960 960"
-                width="36  "
-            >
+                width="36  ">
                 <path
-                    d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z"
-                />
+                    d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
             </svg>
         </button>
     </div>
     <div class="flex content">
         <div
             class="carousel-items"
-            [style.transform]="'translateX(' + -100 * currentIndex + '%)'"
-        >
+            [style.transform]="'translateX(' + -100 * currentIndex + '%)'">
             <div
                 class="carousel-item"
                 *ngFor="let item of items; let i = index"
                 (mouseenter)="stopInterval()"
-                (mouseleave)="startInterval()"
-            >
+                (mouseleave)="startInterval()">
                 <div class="flex content">
                     <ng-container
                         *ngTemplateOutlet="
                             customItemTemplate || carouselItemTemplate;
                             context: { $implicit: item, index: i }
-                        "
-                    ></ng-container>
+                        "></ng-container>
                 </div>
             </div>
         </div>
     </div>
     <div
         *ngIf="isControleEnabled"
-        class="button-container button-container-button-next"
-    >
-        <button (click)="next()">
+        class="button-container button-container-button-next">
+        <button (click)="next()" *ngIf="currentIndex !== items.length - 1">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="36"
                 viewBox="0 -960 960 960"
-                width="36"
-            >
+                width="36">
                 <path
-                    d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"
-                />
+                    d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
             </svg>
         </button>
     </div>
@@ -60,8 +53,7 @@
             *ngFor="let item of items; let i = index"
             class="dot"
             [class.active]="i === currentIndex"
-            (click)="jumpTo(i)"
-        ></span>
+            (click)="jumpTo(i)"></span>
     </div>
 </div>
 

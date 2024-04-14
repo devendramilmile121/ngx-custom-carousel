@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
     Component,
     Input,
@@ -15,8 +16,9 @@ import { Subscription, interval } from 'rxjs';
     templateUrl: './ngx-custom-carousel.component.html',
     styleUrls: ['./ngx-custom-carousel.component.scss'],
 })
-export class NgxCustomCarouselComponent implements OnChanges, OnInit, OnDestroy {
-
+export class NgxCustomCarouselComponent
+    implements OnChanges, OnInit, OnDestroy
+{
     @Input() items: any[] = [];
     @Input() customItemTemplate!: TemplateRef<any>;
     @Input() delay: number = 2000;
@@ -30,7 +32,7 @@ export class NgxCustomCarouselComponent implements OnChanges, OnInit, OnDestroy 
     isControleEnabled: boolean = false;
 
     ngOnChanges(changes: SimpleChanges): void {
-        this.isControleEnabled = changes?.['enableControls'].currentValue
+        this.isControleEnabled = changes?.['enableControls'].currentValue;
     }
 
     ngOnInit(): void {
