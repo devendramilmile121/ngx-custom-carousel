@@ -46,6 +46,7 @@ jobs:
       - name: Publish the library
         run: npm run semantic-release
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   publish_showcase:
