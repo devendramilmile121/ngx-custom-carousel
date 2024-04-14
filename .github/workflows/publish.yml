@@ -14,32 +14,14 @@ jobs:
         with:
           node-version: 21
 
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli
+
       - name: Install dependencies
         run: npm ci
 
       - name: Run Tests
         run: ng test ngx-custom-carousel --configuration=ci
-
-  publish_showcase:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 21
-
-      - name: Install dependencies
-        run: npm ci
-      - name: Build Showcase
-        run: npm run build:showcase
-      - name: Deploy Showcase
-        if: success()
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: dist/showcase
-          enable_jekyll: true
-
 
   publish:
     runs-on: ubuntu-latest
@@ -52,6 +34,9 @@ jobs:
           node-version: 21
           registry-url: 'https://registry.npmjs.org/'
 
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli
+
       - name: Install dependencies
         run: npm ci
 
@@ -62,6 +47,35 @@ jobs:
         run: npm run semantic-release
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_AUTOMATION }}
+
+  publish_showcase:
+    runs-on: ubuntu-latest
+    needs: [quality, publish]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 21
+
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Latest ngx-custom-carousel
+        run: npm install ngx-custom-carousel:latest
+
+      - name: Build Showcase
+        run: npm run build:showcase
+
+      - name: Deploy Showcase
+        if: success()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist/showcase
+          enable_jekyll: true
 
 
 
