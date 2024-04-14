@@ -65,7 +65,7 @@ jobs:
         run: npm ci
 
       - name: Install Latest ngx-custom-carousel
-        run: npm install ngx-custom-carousel:latest
+        run: npm install ngx-custom-carousel
 
       - name: Build Showcase
         run: npm run build:showcase
