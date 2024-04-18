@@ -1,0 +1,28 @@
+<div class="api-container">
+    <h2>API reference for ngx-custom-carousel</h2>
+    <p>
+        <code
+            >import {{ '{' }} NgxCustomCarouselModule {{ '}' }} from
+            'ngx-custom-carousel';</code
+        >
+    </p>
+
+    <h3 class="mt-4">NgxCustomCarousel</h3>
+    <p>Directive to display a carousel</p>
+    <p>Selector: <code>[ngx-custom-carousel]</code></p>
+    <h5>Properties</h5>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+        </ng-container>
+        <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef>Description</th>
+            <td mat-cell *matCellDef="let element">
+                {{ element.description }}
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+</div>

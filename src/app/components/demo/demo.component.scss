@@ -1,0 +1,84 @@
+.container {
+    height: 96.6%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.margin-top {
+    margin-top: 2rem;
+}
+
+.hw-full {
+    height: 100%;
+    width: 100%;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    min-width: 300px;
+    margin: auto;
+    text-align: center;
+
+    img {
+        width: 128px;
+        height: 128px;
+        border-radius: 50%;
+        border: 1px solid gray;
+        padding: 8px;
+        margin-top: 8px;
+    }
+}
+
+.title {
+    color: grey;
+    font-size: 18px;
+}
+
+button {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+}
+
+a {
+    text-decoration: none;
+    font-size: 22px;
+    color: black;
+}
+
+button:hover,
+a:hover {
+    opacity: 0.7;
+}
+
+ngx-custom-carousel {
+    display: block;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.form-container {
+    padding: 0rem 1rem;
+    form {
+        margin-top: 0.5rem;
+    }
+}
+
+.progress-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 86%;
+    mat-progress-bar {
+        margin: 0rem 2rem;
+    }
+}

@@ -1,21 +1,20 @@
-<div class="container">
-    <div class="hw-full">
-        <h3>With Custom Template</h3>
-        <ngx-custom-carousel
-            [items]="itemsTemplate"
-            [customItemTemplate]="userDetailsTemplate"
-            [delay]="5000"
-            [enableControls]="true"
-        ></ngx-custom-carousel>
-    </div>
-</div>
-
-<ng-template #userDetailsTemplate let-item let-index="index">
-    <div class="card">
-        <img [src]="item.image" [alt]="item.firstName" />
-        <h1>{{ item.firstName + " " + item.lastName }}</h1>
-        <p class="title">{{ item.company.title }}</p>
-        <p>{{ item.company.department }}</p>
-        <p><button>Contact</button></p>
-    </div>
-</ng-template>
+<mat-toolbar>
+    <span>Ngx Custom Carousel Demo</span>
+    <span class="example-spacer"></span>
+    <button
+        mat-icon-button
+        class="star-icon"
+        aria-label="icon-button with star icon">
+        <mat-icon>star</mat-icon>
+    </button>
+    <button
+        mat-icon-button
+        class="example-icon"
+        aria-label="icon-button with share icon">
+        <mat-icon>share</mat-icon>
+    </button>
+</mat-toolbar>
+<mat-tab-group>
+    <mat-tab label="DEMO"> <app-demo></app-demo> </mat-tab>
+    <mat-tab label="API"> <app-api-explore></app-api-explore> </mat-tab>
+</mat-tab-group>

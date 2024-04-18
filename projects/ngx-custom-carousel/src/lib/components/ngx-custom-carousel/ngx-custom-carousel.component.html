@@ -2,7 +2,7 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <div class="carousel" ngxSwipe (swipeLeft)="next()" (swipeRight)="previous()">
     <div
-        *ngIf="isControleEnabled"
+        *ngIf="isControlEnabled"
         class="button-container button-container-button-previous">
         <button (click)="previous()" *ngIf="currentIndex !== 0">
             <svg
@@ -35,7 +35,7 @@
         </div>
     </div>
     <div
-        *ngIf="isControleEnabled"
+        *ngIf="isControlEnabled"
         class="button-container button-container-button-next">
         <button (click)="next()" *ngIf="currentIndex !== items.length - 1">
             <svg

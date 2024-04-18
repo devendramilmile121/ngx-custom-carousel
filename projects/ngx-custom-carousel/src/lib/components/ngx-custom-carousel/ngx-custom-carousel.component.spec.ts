@@ -35,15 +35,25 @@ describe('NgxCustomCarouselComponent', () => {
     describe('startInterval', () => {
         it('should start interval and call next method', fakeAsync(() => {
             spyOn(component, 'next');
+            component.enableAutoSwitch = true;
             component.startInterval();
             tick(2000);
             expect(component.next).toHaveBeenCalled();
+            component.stopInterval(); // Stop interval to prevent timer errors
+        }));
+        it('should not start interval if enableAutoSwitch is false', fakeAsync(() => {
+            spyOn(component, 'next');
+            component.enableAutoSwitch = false;
+            component.startInterval();
+            tick(2000);
+            expect(component.next).not.toHaveBeenCalled();
             component.stopInterval(); // Stop interval to prevent timer errors
         }));
     });
 
     describe('stopInterval', () => {
         it('should stop interval', () => {
+            component.enableAutoSwitch = true;
             component.startInterval();
             component.stopInterval();
             expect(component.intervalSubscription.closed).toBe(true);
@@ -82,6 +92,8 @@ describe('NgxCustomCarouselComponent', () => {
 
     describe('ngOnDestroy', () => {
         it('should unsubscribe from intervalSubscription', () => {
+            component.enableAutoSwitch = true;
+            component.startInterval();
             spyOn(component.intervalSubscription, 'unsubscribe');
             component.ngOnDestroy();
             expect(

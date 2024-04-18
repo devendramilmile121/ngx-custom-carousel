@@ -1,0 +1,63 @@
+<div class="container">
+    <div class="hw-full margin-top">
+        <div class="form-container">
+            <section class="example-section">
+                <mat-checkbox
+                    class="example-margin"
+                    [(ngModel)]="enableControls"
+                    >{{ enableControls ? 'Disable' : 'Enable' }} Controls (Next
+                    & Previous buttons)</mat-checkbox
+                >
+                <mat-checkbox
+                    class="example-margin"
+                    [(ngModel)]="enableAutoSwitch"
+                    >{{ enableAutoSwitch ? 'Disable' : 'Enable' }} Auto
+                    Carousel</mat-checkbox
+                >
+            </section>
+            <form class="example-form">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Enter Delay</mat-label>
+                    <input
+                        type="number"
+                        matInput
+                        [formControl]="delay"
+                        placeholder="Delay in ms" />
+                    @if (
+                        delay.hasError('positiveInteger') &&
+                        !delay.hasError('required')
+                    ) {
+                        <mat-error>Please enter positive number.</mat-error>
+                    }
+                    @if (delay.hasError('required')) {
+                        <mat-error
+                            >Delay is <strong>required</strong></mat-error
+                        >
+                    }
+                </mat-form-field>
+            </form>
+        </div>
+        @if (loading) {
+            <div class="hw-full placeholder-height progress-bar">
+                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            </div>
+        } @else {
+            <ngx-custom-carousel
+                [items]="itemsTemplate"
+                [customItemTemplate]="userDetailsTemplate"
+                [delay]="getDelay"
+                [enableControls]="enableControls"
+                [enableAutoSwitch]="enableAutoSwitch"></ngx-custom-carousel>
+        }
+    </div>
+</div>
+
+<ng-template #userDetailsTemplate let-item let-index="index">
+    <div class="card">
+        <img [src]="item.image" [alt]="item.firstName" />
+        <h1>{{ item.firstName + ' ' + item.lastName }}</h1>
+        <p class="title">{{ item.company.title }}</p>
+        <p>{{ item.company.department }}</p>
+        <p><button>Contact</button></p>
+    </div>
+</ng-template>

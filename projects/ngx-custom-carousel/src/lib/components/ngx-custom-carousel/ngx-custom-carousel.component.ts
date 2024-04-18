@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
     Component,
     Input,
@@ -19,30 +18,48 @@ import { Subscription, interval } from 'rxjs';
 export class NgxCustomCarouselComponent
     implements OnChanges, OnInit, OnDestroy
 {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     @Input() items: any[] = [];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     @Input() customItemTemplate!: TemplateRef<any>;
     @Input() delay: number = 2000;
     @Input() enableControls: boolean = false;
+    @Input() enableAutoSwitch: boolean = false;
 
     @ViewChild('carouselItemTemplate', { static: true })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     carouselItemTemplate!: TemplateRef<any>;
 
-    currentIndex = 0;
+    currentIndex: number = 0;
     intervalSubscription!: Subscription;
-    isControleEnabled: boolean = false;
-
-    ngOnChanges(changes: SimpleChanges): void {
-        this.isControleEnabled = changes?.['enableControls'].currentValue;
-    }
+    isControlEnabled: boolean = false;
 
     ngOnInit(): void {
-        this.startInterval();
+        this.isControlEnabled = this.enableControls;
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['enableControls']) {
+            this.isControlEnabled = changes['enableControls'].currentValue;
+            if (this.isControlEnabled) {
+                this.startInterval();
+            } else {
+                this.stopInterval();
+            }
+        }
+
+        if (changes['delay'] && changes['delay'].currentValue > 0) {
+            this.stopInterval();
+            this.startInterval();
+        }
     }
 
     startInterval(): void {
-        this.intervalSubscription = interval(this.delay).subscribe(() => {
-            this.next();
-        });
+        if (this.enableAutoSwitch) {
+            this.intervalSubscription = interval(this.delay).subscribe(() => {
+                this.next();
+            });
+        }
     }
 
     stopInterval(): void {
@@ -65,8 +82,10 @@ export class NgxCustomCarouselComponent
     jumpTo(index: number): void {
         if (this.currentIndex !== index) {
             this.currentIndex = index;
-            this.stopInterval();
-            this.startInterval();
+            if (this.enableAutoSwitch) {
+                this.stopInterval();
+                this.startInterval();
+            }
         }
     }
 
