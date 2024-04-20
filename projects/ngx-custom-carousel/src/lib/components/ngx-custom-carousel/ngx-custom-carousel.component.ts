@@ -47,6 +47,10 @@ export class NgxCustomCarouselComponent
             }
         }
 
+        if (changes['enableAutoSwitch']) {
+            this.isControlEnabled = changes['enableControls'].currentValue;
+        }
+
         if (changes['delay'] && changes['delay'].currentValue > 0) {
             this.stopInterval();
             this.startInterval();
