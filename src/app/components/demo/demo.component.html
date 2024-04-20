@@ -22,7 +22,8 @@
                         type="number"
                         matInput
                         [formControl]="delay"
-                        placeholder="Delay in ms" />
+                        placeholder="Delay in ms"
+                        [min]="100" />
                     @if (
                         delay.hasError('positiveInteger') &&
                         !delay.hasError('required')
@@ -32,6 +33,16 @@
                     @if (delay.hasError('required')) {
                         <mat-error
                             >Delay is <strong>required</strong></mat-error
+                        >
+                    }
+                    @if (
+                        !delay.hasError('positiveInteger') &&
+                        !delay.hasError('required') &&
+                        delay.hasError('min')
+                    ) {
+                        <mat-error
+                            >Minimum value should be
+                            <strong>100</strong></mat-error
                         >
                     }
                 </mat-form-field>

@@ -39,9 +39,8 @@ export class NgxCustomCarouselComponent
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes['enableControls']) {
-            this.isControlEnabled = changes['enableControls'].currentValue;
-            if (this.isControlEnabled) {
+        if (changes['enableAutoSwitch']) {
+            if (changes['enableAutoSwitch'].currentValue) {
                 this.startInterval();
             } else {
                 this.stopInterval();
