@@ -31,7 +31,7 @@ export class NgxCustomCarouselComponent
     carouselItemTemplate!: TemplateRef<any>;
 
     currentIndex: number = 0;
-    intervalSubscription!: Subscription;
+    intervalSubscription?: Subscription;
     isControlEnabled: boolean = false;
 
     ngOnInit(): void {
@@ -54,7 +54,11 @@ export class NgxCustomCarouselComponent
 
         if (changes['delay'] && changes['delay'].currentValue > 0) {
             this.stopInterval();
-            this.startInterval();
+            setTimeout(() => {
+                this.startInterval();
+            }, 100);
+        } else {
+            this.stopInterval();
         }
     }
 
@@ -84,8 +88,25 @@ export class NgxCustomCarouselComponent
     }
 
     jumpTo(index: number): void {
-        if (this.currentIndex !== index) {
-            this.currentIndex = index;
+        if (this.items.length === 0) {
+            this.currentIndex = 0;
+            if (this.enableAutoSwitch) {
+                this.stopInterval();
+                this.startInterval();
+            }
+            return;
+        }
+
+        if (index >= 0 && index < this.items.length) {
+            if (this.currentIndex !== index) {
+                this.currentIndex = index;
+                if (this.enableAutoSwitch) {
+                    this.stopInterval();
+                    this.startInterval();
+                }
+            }
+        } else if (index >= this.items.length) {
+            this.currentIndex = this.items.length - 1;
             if (this.enableAutoSwitch) {
                 this.stopInterval();
                 this.startInterval();
