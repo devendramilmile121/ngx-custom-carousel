@@ -1,4 +1,5 @@
 # ngx-custom-carousel
+
 <p align="center">
   <a href="#badge">
     <img alt="semantic-release: angular" src="https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release">
