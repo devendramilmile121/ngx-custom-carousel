@@ -1,5 +1,12 @@
 # ngx-custom-carousel
-
+<p align="center">
+  <a href="#badge">
+    <img alt="semantic-release: angular" src="https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release">
+  </a>
+  <a href="https://github.com/devendramilmile121/ngx-custom-carousel/actions?query=workflow%3Aangular+branch%3Amaster">
+    <img alt="Build states" src="https://github.com/devendramilmile121/ngx-custom-carousel/actions/workflows/publish.yml/badge.svg">
+  </a>
+</p>
 ngx-custom-carousel is a feature-rich Angular 17 component crafted to elevate your carousel experience. Seamlessly integrated with Angular, this library offers swipe functionality for smooth content navigation on various devices. The carousel comes equipped with next and forward buttons, enhancing user interaction. While these buttons maintain a sleek design for consistency, ngx-custom-carousel empowers users to fully customize carousel templates to suit their unique needs. Whether showcasing images, products, or other content, ngx-custom-carousel delivers a dynamic and intuitive solution for creating captivating carousels in Angular applications.
 
 ### Features
@@ -22,8 +29,6 @@ npm  install  ngx-custom-carousel  --save
 
 [Demo and API Reference](https://devendramilmile121.github.io/ngx-custom-carousel/)
 
-[![portfolio](https://camo.githubusercontent.com/d0564aee63e39899cbe989b7cb3316dce83277e87ca6f5f68f09aa7fdabbe214/68747470733a2f2f692e696d6775722e636f6d2f767232614267412e706e67)](https://stackblitz.com/edit/stackblitz-starters-jr9c9d?file=src%2Fmain.ts)
-
 ## Usage
 
 1. Import the `NgxCustomCarouselModule` in your Angular module:
@@ -37,16 +42,11 @@ import { NgxCustomCarouselModule } from 'ngx-custom-carousel';
 export class YourModule {}
 ```
 
-2. Use the `<ngx-custom-carousel>` element in your component's template to display a carousel with string items:
+2. Use the `<ngx-custom-carousel>` element in your component's template to display a carousel:
 
 ```html
 <div class="container">
     <div class="hw-full">
-        <h3>String Items</h3>
-        <ngx-custom-carousel [items]="items"></ngx-custom-carousel>
-    </div>
-    <div class="hw-full">
-        <h3>With Custom Template</h3>
         <ngx-custom-carousel
             [items]="itemsTemplate"
             [customItemTemplate]="userDetailsTemplate"
