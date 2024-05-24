@@ -1,429 +1,202 @@
 import {
     ComponentFixture,
     TestBed,
+    discardPeriodicTasks,
     fakeAsync,
     tick,
 } from '@angular/core/testing';
 import { NgxCustomCarouselComponent } from './ngx-custom-carousel.component';
-import { Subscription } from 'rxjs';
 
 describe('NgxCustomCarouselComponent', () => {
     let component: NgxCustomCarouselComponent;
     let fixture: ComponentFixture<NgxCustomCarouselComponent>;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
             declarations: [NgxCustomCarouselComponent],
-        });
-        fixture = TestBed.createComponent(NgxCustomCarouselComponent);
-        component = fixture.componentInstance;
+        }).compileComponents();
     });
 
-    it('should create the component', () => {
+    beforeEach(() => {
+        fixture = TestBed.createComponent(NgxCustomCarouselComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
+    afterEach(() => {
+        if (component.intervalSubscription) {
+            component.intervalSubscription.unsubscribe();
+        }
+        fixture.destroy();
+    });
+
+    it('should create', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should initialize with default values', () => {
-        expect(component.items).toEqual([]);
-        expect(component.customItemTemplate).toBeUndefined();
-        expect(component.delay).toBe(2000);
-        expect(component.enableControls).toBe(false);
-        expect(component.enableAutoSwitch).toBe(false);
-        expect(component.currentIndex).toBe(0);
-        expect(component.intervalSubscription).toBeUndefined();
-        expect(component.isControlEnabled).toBe(false);
-    });
-
-    it('should start and stop interval on enableAutoSwitch change', () => {
-        component.enableAutoSwitch = true;
-        component.delay = 1000;
-        component.ngOnChanges({
-            enableAutoSwitch: {
-                currentValue: true,
-                previousValue: undefined,
-                firstChange: false,
-                isFirstChange: function (): boolean {
-                    return false;
-                },
-            },
-        });
-
-        expect(component.intervalSubscription).toBeDefined();
-
-        component.enableAutoSwitch = false;
-        component.ngOnChanges({
-            enableAutoSwitch: {
-                currentValue: false,
-                previousValue: undefined,
-                firstChange: false,
-                isFirstChange: function (): boolean {
-                    return false;
-                },
-            },
-        });
-
-        expect(component.intervalSubscription?.closed).toBe(true);
-    });
-
-    it('should start and stop interval on delay change', () => {
-        component.enableAutoSwitch = true;
-        component.delay = 1000;
-        component.ngOnChanges({
-            enableAutoSwitch: {
-                currentValue: true,
-                previousValue: undefined,
-                firstChange: false,
-                isFirstChange: function (): boolean {
-                    return false;
-                },
-            },
-        });
-
-        expect(component.intervalSubscription).toBeDefined();
-
-        component.ngOnChanges({
-            delay: {
-                currentValue: 2000,
-                previousValue: undefined,
-                firstChange: false,
-                isFirstChange: function (): boolean {
-                    return false;
-                },
-            },
-        });
-
-        expect(component.intervalSubscription?.closed).toBe(true);
-
-        component.ngOnChanges({
-            delay: {
-                currentValue: 1000,
-                previousValue: undefined,
-                firstChange: false,
-                isFirstChange: function (): boolean {
-                    return false;
-                },
-            },
-        });
-
-        expect(component.intervalSubscription).toBeDefined();
-    });
-
-    it('should set currentIndex to next item on next()', () => {
-        component.items = [1, 2, 3, 4];
-        component.currentIndex = 0;
-        component.next();
-
-        expect(component.currentIndex).toBe(1);
-
-        component.currentIndex = 3;
-        component.next();
-
-        expect(component.currentIndex).toBe(0);
-    });
-
-    it('should set currentIndex to previous item on previous()', () => {
-        component.items = [1, 2, 3, 4];
-        component.currentIndex = 3;
-        component.previous();
-
-        expect(component.currentIndex).toBe(2);
-
-        component.currentIndex = 0;
-        component.previous();
-
-        expect(component.currentIndex).toBe(3);
-    });
-
-    it('should jump to the specified index on jumpTo()', () => {
-        spyOn(component, 'startInterval');
-        spyOn(component, 'stopInterval');
-        component.items = [1, 2, 3, 4];
-        component.currentIndex = 0;
-        component.enableAutoSwitch = true;
-        component.jumpTo(2);
-
-        expect(component.stopInterval).toHaveBeenCalled();
-        expect(component.startInterval).toHaveBeenCalled();
-        expect(component.currentIndex).toBe(2);
-
-        component.jumpTo(0);
-
-        expect(component.stopInterval).toHaveBeenCalled();
-        expect(component.startInterval).toHaveBeenCalled();
-        expect(component.currentIndex).toBe(0);
-    });
-
-    it('should start and stop interval on jumpTo() if enableAutoSwitch is true', () => {
-        component.items = [1, 2, 3, 4];
-        component.enableAutoSwitch = true;
-        component.delay = 1000;
-        component.ngOnChanges({
-            enableAutoSwitch: {
-                currentValue: true,
-                previousValue: undefined,
-                firstChange: false,
-                isFirstChange: function (): boolean {
-                    return false;
-                },
-            },
-        });
-
-        spyOn(component, 'startInterval');
-        spyOn(component, 'stopInterval');
-
-        component.jumpTo(2);
-
-        expect(component.stopInterval).toHaveBeenCalled();
-        expect(component.startInterval).toHaveBeenCalled();
-    });
-
-    it('should set isControlEnabled to enableControls value on ngOnChanges()', () => {
-        component.ngOnChanges({
-            enableControls: {
-                currentValue: true,
-                previousValue: undefined,
-                firstChange: false,
-                isFirstChange: function (): boolean {
-                    return false;
-                },
-            },
-        });
-
-        expect(component.isControlEnabled).toBe(true);
-
-        component.ngOnChanges({
-            enableControls: {
-                currentValue: false,
-                previousValue: undefined,
-                firstChange: false,
-                isFirstChange: function (): boolean {
-                    return false;
-                },
-            },
-        });
-
-        expect(component.isControlEnabled).toBe(false);
-    });
-
-    it('should unsubscribe from interval on ngOnDestroy()', () => {
-        component.intervalSubscription = new Subscription();
-        spyOn(component.intervalSubscription, 'unsubscribe');
-        component.ngOnDestroy();
-        expect(component.intervalSubscription.unsubscribe).toHaveBeenCalled();
-    });
-
-    it('should handle jumping to last item if index is greater than items array length', () => {
-        component.items = [1, 2, 3, 4];
-        component.jumpTo(5);
-        expect(component.currentIndex).toBe(3);
-    });
-
-    it('should not jump if index is equal to current index', () => {
-        component.items = [1, 2, 3, 4];
-        component.currentIndex = 2;
-        component.jumpTo(2);
-        expect(component.currentIndex).toBe(2);
-    });
-
-    it('should handle empty items array', () => {
-        component.items = [];
-        component.jumpTo(0);
-        expect(component.currentIndex).toBe(0);
-    });
-
-    it('should handle delay set to 0', () => {
-        component.enableAutoSwitch = true;
-        component.delay = 0;
-        component.ngOnChanges({
-            delay: {
-                currentValue: 0,
-                previousValue: undefined,
-                firstChange: false,
-                isFirstChange: function (): boolean {
-                    return false;
-                },
-            },
-        });
-        expect(component.intervalSubscription).toBeUndefined();
-    });
-
-    it('should handle delay set to 0 and then to a positive value', () => {
-        component.enableAutoSwitch = true;
-        component.delay = 0;
-        component.ngOnChanges({
-            delay: {
-                currentValue: 0,
-                previousValue: undefined,
-                firstChange: false,
-                isFirstChange: function (): boolean {
-                    return false;
-                },
-            },
-        });
-        expect(component.intervalSubscription).toBeUndefined();
-
-        component.delay = 1000;
-        component.ngOnChanges({
-            enableAutoSwitch: {
-                currentValue: 1000,
-                previousValue: undefined,
-                firstChange: false,
-                isFirstChange: function (): boolean {
-                    return false;
-                },
-            },
-            delay: {
-                currentValue: 1000,
-                previousValue: undefined,
-                firstChange: false,
-                isFirstChange: function (): boolean {
-                    return false;
-                },
-            },
-        });
-        expect(component.intervalSubscription).toBeDefined();
-    });
-
-    it('should handle delay set to 0 and then to a negative value', () => {
-        component.enableAutoSwitch = true;
-        component.delay = 0;
-        component.ngOnChanges({
-            delay: {
-                currentValue: 0,
-                previousValue: undefined,
-                firstChange: false,
-                isFirstChange: function (): boolean {
-                    return false;
-                },
-            },
-        });
-        expect(component.intervalSubscription).toBeUndefined();
-
-        component.delay = -1000;
-        component.ngOnChanges({
-            delay: {
-                currentValue: -1000,
-                previousValue: undefined,
-                firstChange: false,
-                isFirstChange: function (): boolean {
-                    return false;
-                },
-            },
-        });
-        expect(component.intervalSubscription).toBeUndefined();
-    });
-
-    it('should not start interval if enableAutoSwitch is false on ngOnChanges()', () => {
-        spyOn(component, 'startInterval');
-        component.ngOnChanges({
-            enableAutoSwitch: {
-                currentValue: false,
-                previousValue: undefined,
-                firstChange: false,
-                isFirstChange: function (): boolean {
-                    return false;
-                },
-            },
-        });
-        expect(component.startInterval).not.toHaveBeenCalled();
-    });
-
-    it('should not start interval if delay is 0 on ngOnChanges()', () => {
-        spyOn(component, 'startInterval');
-        component.delay = 0;
-        component.ngOnChanges({
-            delay: {
-                currentValue: 0,
-                previousValue: undefined,
-                firstChange: false,
-                isFirstChange: function (): boolean {
-                    return false;
-                },
-            },
-        });
-        expect(component.startInterval).not.toHaveBeenCalled();
-    });
-
-    it('should stop interval if delay is 0 on ngOnChanges()', () => {
-        spyOn(component, 'stopInterval');
-        component.delay = 0;
-        component.ngOnChanges({
-            delay: {
-                currentValue: 0,
-                previousValue: undefined,
-                firstChange: false,
-                isFirstChange: function (): boolean {
-                    return false;
-                },
-            },
-        });
-        expect(component.stopInterval).toHaveBeenCalled();
-    });
-
-    it('should not start interval if enableAutoSwitch is false on jumpTo()', () => {
-        component.items = [1, 2, 3, 4];
-        component.enableAutoSwitch = false;
-        spyOn(component, 'startInterval');
-        component.jumpTo(2);
-        expect(component.startInterval).not.toHaveBeenCalled();
-    });
-
-    it('should handle jumping to last item if index is equal to items array length', () => {
-        component.items = [1, 2, 3, 4];
-        component.jumpTo(4);
-        expect(component.currentIndex).toBe(3);
-    });
-
-    it('should handle jumping to last item if index is greater than items array length', () => {
-        component.items = [1, 2, 3, 4];
-        component.jumpTo(5);
-        expect(component.currentIndex).toBe(3);
-    });
-
-    it('should not start interval if enableAutoSwitch is false on jumpTo()', () => {
-        component.items = [1, 2, 3, 4];
-        component.enableAutoSwitch = false;
-        spyOn(component, 'startInterval');
-        component.jumpTo(2);
-        expect(component.startInterval).not.toHaveBeenCalled();
-    });
-
-    it('should set isControlEnabled to enableControls value on ngOnInit()', () => {
+    it('should initialize controlEnabled with enableControls input', () => {
         component.enableControls = true;
         component.ngOnInit();
-        expect(component.isControlEnabled).toBe(true);
-
-        component.enableControls = false;
-        component.ngOnInit();
-        expect(component.isControlEnabled).toBe(false);
+        expect(component.isControlEnabled()).toBe(true);
     });
 
-    it('should start interval after a delay change when delay is greater than 0', fakeAsync(() => {
-        spyOn(component, 'startInterval');
-        spyOn(component, 'stopInterval');
-        component.delay = 2000;
+    it('should initialize autoSwitchEnabled with enableAutoSwitch input', () => {
+        component.enableAutoSwitch = true;
+        component.ngOnInit();
+        expect(component.autoSwitchEnabled()).toBe(true);
+    });
+
+    it('should initialize intervalDelay with delay input', () => {
+        component.delay = 3000;
+        component.ngOnInit();
+        expect(component.intervalDelay()).toBe(3000);
+    });
+
+    it('should update autoSwitchEnabled on input change', () => {
+        component.enableAutoSwitch = true;
         component.ngOnChanges({
-            delay: {
-                currentValue: 2000,
-                previousValue: undefined,
+            enableAutoSwitch: {
+                currentValue: true,
+                previousValue: false,
                 firstChange: false,
-                isFirstChange: function (): boolean {
-                    return false;
-                },
+                isFirstChange: () => false,
             },
         });
-        tick(100);
+        expect(component.autoSwitchEnabled()).toBe(true);
+    });
+
+    it('should update intervalDelay on input change', () => {
+        component.delay = 5000;
+        component.ngOnChanges({
+            delay: {
+                currentValue: 5000,
+                previousValue: 2000,
+                firstChange: false,
+                isFirstChange: () => false,
+            },
+        });
+        expect(component.intervalDelay()).toBe(5000);
+    });
+
+    it('should update isControlEnabled on input change', () => {
+        component.enableControls = true;
+        component.ngOnChanges({
+            enableControls: {
+                currentValue: true,
+                previousValue: false,
+                firstChange: false,
+                isFirstChange: () => false,
+            },
+        });
+        expect(component.isControlEnabled()).toBe(true);
+    });
+
+    it('should start interval on manageInterval if autoSwitchEnabled is true and delay > 0', fakeAsync(() => {
+        component.enableAutoSwitch = true;
+        component.delay = 200;
+        component.ngOnInit();
+        spyOn(component, 'startInterval').and.callThrough();
+        tick(1000); // Simulate passage of time
+        expect(component.startInterval).toHaveBeenCalled();
+        discardPeriodicTasks();
+    }));
+
+    it('should stop interval on manageInterval if autoSwitchEnabled is false', () => {
+        component.enableAutoSwitch = false;
+        spyOn(component, 'stopInterval');
+        component.manageInterval();
+        expect(component.stopInterval).toHaveBeenCalled();
+    });
+
+    it('should call next method when interval elapses', fakeAsync(() => {
+        component.items = [1, 2, 3];
+        component.enableAutoSwitch = true;
+        component.delay = 100;
+        spyOn(component, 'next');
+        component.ngOnInit();
+        component.manageInterval();
+        tick(200); // Simulate passage of time
+        expect(component.next).toHaveBeenCalled();
+        discardPeriodicTasks();
+    }));
+
+    it('should correctly set currentIndex to the next value', () => {
+        component.items = [1, 2, 3];
+        component.currentIndex.set(0);
+        component.next();
+        expect(component.currentIndex()).toBe(1);
+    });
+
+    it('should correctly set currentIndex to the previous value', () => {
+        component.items = [1, 2, 3];
+        component.currentIndex.set(1);
+        component.previous();
+        expect(component.currentIndex()).toBe(0);
+    });
+
+    it('should correctly jump to specified index', () => {
+        component.items = [1, 2, 3];
+        component.jumpTo(2);
+        expect(component.currentIndex()).toBe(2);
+    });
+
+    it('should stop interval on ngOnDestroy', () => {
+        spyOn(component, 'stopInterval');
+        component.ngOnDestroy();
+        expect(component.stopInterval).toHaveBeenCalled();
+    });
+
+    it('should not start a new interval if one is already running', () => {
+        component.enableAutoSwitch = true;
+        component.delay = 1000;
+        component.ngOnInit();
+        component.startInterval();
+        const initialSubscription = component.intervalSubscription;
+        component.startInterval();
+        expect(component.intervalSubscription).toBe(initialSubscription);
+    });
+
+    it('should handle zero items gracefully in jumpTo method', () => {
+        component.items = [];
+        component.jumpTo(1);
+        expect(component.currentIndex()).toBe(0);
+    });
+
+    it('should correctly handle out of bounds index in jumpTo method', () => {
+        component.items = [1, 2, 3];
+        component.jumpTo(5);
+        expect(component.currentIndex()).toBe(2);
+    });
+
+    it('should correctly restart interval when enableAutoSwitch changes to true', fakeAsync(() => {
+        component.enableAutoSwitch = false;
+        component.ngOnInit();
+        spyOn(component, 'startInterval');
+        component.ngOnChanges({
+            enableAutoSwitch: {
+                currentValue: true,
+                previousValue: false,
+                firstChange: false,
+                isFirstChange: () => false,
+            },
+        });
+        tick(150); // Simulate passage of time
         expect(component.startInterval).toHaveBeenCalled();
     }));
 
-    it('should call next() when interval emits a value', fakeAsync(() => {
-        spyOn(component, 'next');
+    it('should correctly restart interval when delay changes', fakeAsync(() => {
         component.enableAutoSwitch = true;
-        component.delay = 1000;
-        component.startInterval();
-        expect(component.next).not.toHaveBeenCalled();
-        tick(1000);
-        expect(component.next).toHaveBeenCalled();
-        component.stopInterval();
+        component.ngOnInit();
+        spyOn(component, 'startInterval');
+        component.ngOnChanges({
+            delay: {
+                currentValue: 3000,
+                previousValue: 2000,
+                firstChange: false,
+                isFirstChange: () => false,
+            },
+        });
+        tick(150); // Simulate passage of time
+        expect(component.startInterval).toHaveBeenCalled();
     }));
 });

@@ -4,7 +4,7 @@
     <div
         *ngIf="isControlEnabled"
         class="button-container button-container-button-previous">
-        <button (click)="previous()" *ngIf="currentIndex !== 0">
+        <button (click)="previous()" *ngIf="currentIndex() !== 0">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="36"
@@ -18,7 +18,7 @@
     <div class="flex content">
         <div
             class="carousel-items"
-            [style.transform]="'translateX(' + -100 * currentIndex + '%)'">
+            [style.transform]="'translateX(' + -100 * currentIndex() + '%)'">
             <div
                 class="carousel-item"
                 *ngFor="let item of items; let i = index"
@@ -27,7 +27,7 @@
                 <div class="flex content">
                     <ng-container
                         *ngTemplateOutlet="
-                            customItemTemplate || carouselItemTemplate;
+                            customItemTemplate;
                             context: { $implicit: item, index: i }
                         "></ng-container>
                 </div>
@@ -37,7 +37,7 @@
     <div
         *ngIf="isControlEnabled"
         class="button-container button-container-button-next">
-        <button (click)="next()" *ngIf="currentIndex !== items.length - 1">
+        <button (click)="next()" *ngIf="currentIndex() !== items.length - 1">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="36"
@@ -52,13 +52,7 @@
         <span
             *ngFor="let item of items; let i = index"
             class="dot"
-            [class.active]="i === currentIndex"
+            [class.active]="i === currentIndex()"
             (click)="jumpTo(i)"></span>
     </div>
 </div>
-
-<ng-template #carouselItemTemplate let-item let-index="index">
-    <div class="carousel-item">
-        <div>{{ item }}</div>
-    </div>
-</ng-template>

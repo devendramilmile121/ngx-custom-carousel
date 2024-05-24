@@ -9,6 +9,7 @@ import {
     ViewChild,
 } from '@angular/core';
 import { Subscription, interval } from 'rxjs';
+import { signal } from '@angular/core';
 
 @Component({
     selector: 'ngx-custom-carousel',
@@ -16,7 +17,7 @@ import { Subscription, interval } from 'rxjs';
     styleUrls: ['./ngx-custom-carousel.component.scss'],
 })
 export class NgxCustomCarouselComponent
-    implements OnChanges, OnInit, OnDestroy
+    implements OnInit, OnDestroy, OnChanges
 {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     @Input() items: any[] = [];
@@ -30,41 +31,55 @@ export class NgxCustomCarouselComponent
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     carouselItemTemplate!: TemplateRef<any>;
 
-    currentIndex: number = 0;
+    currentIndex = signal(0);
     intervalSubscription?: Subscription;
-    isControlEnabled: boolean = false;
+    isControlEnabled = signal(this.enableControls);
+    autoSwitchEnabled = signal(this.enableAutoSwitch);
+    intervalDelay = signal(this.delay);
 
     ngOnInit(): void {
-        this.isControlEnabled = this.enableControls;
+        this.isControlEnabled.set(this.enableControls);
+        this.autoSwitchEnabled.set(this.enableAutoSwitch);
+        this.intervalDelay.set(this.delay);
+        this.manageInterval();
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes['enableAutoSwitch']) {
-            if (changes['enableAutoSwitch'].currentValue) {
-                this.startInterval();
-            } else {
-                this.stopInterval();
-            }
+            this.autoSwitchEnabled.set(
+                changes['enableAutoSwitch'].currentValue
+            );
+        }
+
+        if (changes['delay']) {
+            this.intervalDelay.set(changes['delay'].currentValue);
         }
 
         if (changes['enableControls']) {
-            this.isControlEnabled =
-                changes['enableControls'].currentValue ?? false;
+            this.isControlEnabled.set(
+                changes['enableControls'].currentValue ?? false
+            );
         }
 
-        if (changes['delay'] && changes['delay'].currentValue > 0) {
-            this.stopInterval();
+        if (changes['enableAutoSwitch'] || changes['delay']) {
+            this.manageInterval();
+        }
+    }
+
+    manageInterval(): void {
+        this.stopInterval();
+        if (this.autoSwitchEnabled() && this.intervalDelay() > 0) {
             setTimeout(() => {
                 this.startInterval();
             }, 100);
-        } else {
-            this.stopInterval();
         }
     }
 
     startInterval(): void {
-        if (this.enableAutoSwitch) {
-            this.intervalSubscription = interval(this.delay).subscribe(() => {
+        if (this.autoSwitchEnabled() && !this.intervalSubscription) {
+            this.intervalSubscription = interval(
+                this.intervalDelay()
+            ).subscribe(() => {
                 this.next();
             });
         }
@@ -73,43 +88,40 @@ export class NgxCustomCarouselComponent
     stopInterval(): void {
         if (this.intervalSubscription) {
             this.intervalSubscription.unsubscribe();
+            this.intervalSubscription = undefined;
         }
     }
 
     next(): void {
-        this.currentIndex = (this.currentIndex + 1) % this.items.length;
+        this.currentIndex.update(current => (current + 1) % this.items.length);
     }
 
     previous(): void {
-        this.currentIndex =
-            this.currentIndex === 0
-                ? this.items.length - 1
-                : this.currentIndex - 1;
+        this.currentIndex.update(current =>
+            current === 0 ? this.items.length - 1 : current - 1
+        );
     }
 
     jumpTo(index: number): void {
         if (this.items.length === 0) {
-            this.currentIndex = 0;
-            if (this.enableAutoSwitch) {
-                this.stopInterval();
-                this.startInterval();
+            this.currentIndex.set(0);
+            if (this.autoSwitchEnabled()) {
+                this.manageInterval();
             }
             return;
         }
 
         if (index >= 0 && index < this.items.length) {
-            if (this.currentIndex !== index) {
-                this.currentIndex = index;
-                if (this.enableAutoSwitch) {
-                    this.stopInterval();
-                    this.startInterval();
+            if (this.currentIndex() !== index) {
+                this.currentIndex.set(index);
+                if (this.autoSwitchEnabled()) {
+                    this.manageInterval();
                 }
             }
         } else if (index >= this.items.length) {
-            this.currentIndex = this.items.length - 1;
-            if (this.enableAutoSwitch) {
-                this.stopInterval();
-                this.startInterval();
+            this.currentIndex.set(this.items.length - 1);
+            if (this.autoSwitchEnabled()) {
+                this.manageInterval();
             }
         }
     }
