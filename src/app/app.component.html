@@ -1,17 +1,14 @@
 <mat-toolbar>
+    <span class="material-symbols-outlined logo-space"> view_carousel </span>
     <span>Ngx Custom Carousel Demo</span>
     <span class="example-spacer"></span>
     <button
         mat-icon-button
-        class="star-icon"
-        aria-label="icon-button with star icon">
-        <mat-icon>star</mat-icon>
-    </button>
-    <button
-        mat-icon-button
         class="example-icon"
-        aria-label="icon-button with share icon">
-        <mat-icon>share</mat-icon>
+        aria-label="icon-button with share icon"
+        (click)="openGithub()"
+        title="Visit Github">
+        <span class="material-symbols-outlined"> deployed_code_update </span>
     </button>
 </mat-toolbar>
 <mat-tab-group>

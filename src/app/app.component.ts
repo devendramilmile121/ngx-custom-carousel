@@ -22,4 +22,11 @@ import { DemoComponent } from './components/demo/demo.component';
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
 })
-export class AppComponent {}
+export class AppComponent {
+    openGithub(): void {
+        window.open(
+            'https://github.com/devendramilmile121/ngx-custom-carousel',
+            '_blank'
+        );
+    }
+}
