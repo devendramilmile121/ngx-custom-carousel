@@ -1,3 +1,4 @@
+import { NgxCustomCarouselModule } from './../../../../../../libs/ngx-custom-carousel/src/lib/ngx-custom-carousel.module';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import {
@@ -16,7 +17,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { NgxCustomCarouselModule } from 'ngx-custom-carousel';
 import { Subscription } from 'rxjs';
 import { positiveIntegerValidator } from '../../Validators/number-only.validator';
 import { UserService } from '../../services/user.service';
