@@ -1,0 +1,43 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "paths": {
+      "ngx-custom-carousel": [
+        "./dist/ngx-custom-carousel"
+      ]
+    },
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "declaration": false,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "ES2022",
+    "useDefineForClassFields": false,
+    "lib": [
+      "ES2022",
+      "dom"
+    ],
+    "baseUrl": ".",
+    "rootDir": "."
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  },
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
+}
