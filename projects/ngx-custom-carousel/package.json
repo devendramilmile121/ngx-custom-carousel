@@ -11,8 +11,8 @@
         "build": "ng-packagr -p ng-package.json"
     },
     "peerDependencies": {
-        "@angular/common": "^17.3.0",
-        "@angular/core": "^17.3.0"
+        "@angular/common": "^18.2.12",
+        "@angular/core": "^18.2.12"
     },
     "dependencies": {
         "tslib": "^2.3.0"
@@ -29,7 +29,8 @@
         "Angular Swipe Carousel",
         "Customizable",
         "ngx-custom-carousel",
-        "Angular 17"
+        "Angular 17",
+        "Angular 18"
     ],
     "sideEffects": false
 }
