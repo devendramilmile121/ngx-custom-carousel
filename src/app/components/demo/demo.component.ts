@@ -17,9 +17,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NgxCustomCarouselModule } from 'ngx-custom-carousel';
 import { Subscription } from 'rxjs';
-import { positiveIntegerValidator } from '../../validators/number-only.validator';
 import { UserService } from '../../services/user.service';
 import { User } from '../../types/paginated-user';
+import { positiveIntegerValidator } from '../../Validators/number-only.validator';
 
 @Component({
     selector: 'app-demo',
