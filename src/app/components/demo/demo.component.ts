@@ -1,5 +1,4 @@
 import { CommonModule } from '@angular/common';
-import {} from '@angular/common/http';
 import {
     ChangeDetectionStrategy,
     Component,
@@ -18,7 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NgxCustomCarouselModule } from 'ngx-custom-carousel';
 import { Subscription } from 'rxjs';
-import { positiveIntegerValidator } from '../../Validators/number-only.validator';
+import { positiveIntegerValidator } from '../../validators/number-only.validator';
 import { UserService } from '../../services/user.service';
 import { User } from '../../types/paginated-user';
 
@@ -28,11 +27,6 @@ import { User } from '../../types/paginated-user';
     imports: [
         CommonModule,
         NgxCustomCarouselModule,
-        
-// TODO: `HttpClientModule` should not be imported into a component directly.
-// Please refactor the code to add `provideHttpClient()` call to the provider list in the
-// application bootstrap logic and remove the `HttpClientModule` import from this component.
-HttpClientModule,
         MatCheckboxModule,
         FormsModule,
         ReactiveFormsModule,
